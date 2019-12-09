@@ -1,4 +1,4 @@
-package ru.skillbranch.dev_intensive.extensions
+package ru.skillbranch.devintensive.extensions
 
 fun String.truncate(quantity: Int = 16):String{
     var str = this.trim()
