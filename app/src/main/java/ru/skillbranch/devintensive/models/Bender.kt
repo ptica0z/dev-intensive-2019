@@ -29,7 +29,7 @@ class Bender(
                     return "Это неправильный ответ. Давай все по новой\n ${question.question}" to status.color
                 }else {
                     status = status.nextStatuse()
-                    return "Это не правильный ответ!\n${question.question}" to status.color
+                    return "Это не правильный ответ\n${question.question}" to status.color
                 }
             }
         }
