@@ -16,12 +16,12 @@ class Bender(
 
     fun listnAnswer(ansver: String): Pair<String, Triple<Int, Int, Int>>{
         if(question.equals(Question.IDLE))
-            return question.question to status.color
+            return "Отлично - ты справился\n${question.question}" to status.color
         val formatError = cheсkAswerFormat(question, ansver)
         if(formatError.isNullOrEmpty()) {
             if(question.answers.contains(ansver.toLowerCase())) {
                 question = question.nextQuestion()
-                return "Отлично - это правильный ответ!\n${question.question}" to status.color
+                return "Отлично - ты справился\n${question.question}" to status.color
             } else {
                 if(status == Status.CRITICAL){
                     question = Question.NAME
