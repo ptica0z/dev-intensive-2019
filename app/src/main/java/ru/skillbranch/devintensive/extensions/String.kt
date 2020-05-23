@@ -29,3 +29,14 @@ fun String.stripHtml(): String{
     result = result.replace("[ \\f\\t]+".toRegex(), " ")
     return result
 }
+
+//fun String.replaceChar(oldChar: Char, newChar : Char) : String{
+//    val str = this
+//
+//    val r1 = str.toCharArray().let {
+//        for (i in 0..it.lastIndex - 1) {
+//            if (it[i] == oldChar) it[i] = newChar
+//        }
+//    }
+//    return ""
+//}
