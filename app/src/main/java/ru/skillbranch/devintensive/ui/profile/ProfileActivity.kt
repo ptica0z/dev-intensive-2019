@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_profilr.*
 import org.w3c.dom.Text
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.extensions.hideKeyboard
+import ru.skillbranch.devintensive.extensions.repoUrlValid
 import ru.skillbranch.devintensive.models.Bender
 import ru.skillbranch.devintensive.models.Profile
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
@@ -96,8 +97,7 @@ class ProfileActivity : AppCompatActivity() {
             viewModel.switchTheme()
         })
 
-
-
+        val pattern = """^(https:\/\/)?(www\.)?github\.com\/[\w]+${'$'}"""
         et_repository.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -106,16 +106,16 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-               // et_repository.error = if (et_repository.text.toString().length >= 6) null else "Minimum length = 6"
-
-                 if (s is EditText) {
-                    val content = s?.text.toString()
-                    s?.error = if (content.length >= 6) null else "Minimum length = 6"
-
+                if (et_repository.text.toString().repoUrlValid(pattern)){
+                    wr_repository.error = null
+                    et_repository.error = null
+                } else {
+                    wr_repository.error = "Invalid Url"
+                    et_repository.error = "Invalid Url"
                 }
             }
         })
-        et_repository.error = if (et_repository.text.toString().length >= 6) null else "Minimum length = 6"
+        et_repository.error = if (et_repository.text.toString().repoUrlValid(pattern)) null else "Invalid Url"
     }
 
     private fun showCurrentMode(isEdit: Boolean) {
@@ -155,10 +155,12 @@ class ProfileActivity : AppCompatActivity() {
             firstName = et_first_name.text.toString(),
             lastName = et_last_name.text.toString(),
             about = et_about.text.toString(),
-            repo = et_repository.text.toString()
+            repo = if(wr_repository.error == null) et_repository.text.toString() else ""
         ).apply {
             viewModel.saveProfileData(this)
         }
+        et_repository.error = null
+        wr_repository.error = null
     }
 
 }

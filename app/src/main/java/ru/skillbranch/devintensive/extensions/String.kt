@@ -30,13 +30,26 @@ fun String.stripHtml(): String{
     return result
 }
 
-//fun String.replaceChar(oldChar: Char, newChar : Char) : String{
-//    val str = this
-//
-//    val r1 = str.toCharArray().let {
-//        for (i in 0..it.lastIndex - 1) {
-//            if (it[i] == oldChar) it[i] = newChar
-//        }
-//    }
-//    return ""
-//}
+fun String.repoUrlValid(pattern : String) : Boolean{
+    val str = this
+    if(str.equals("")) return true
+    val exclude_path = arrayOf(
+        "enterprise",
+        "features",
+        "topics",
+        "collections",
+        "trending",
+        "events",
+        "marketplace",
+        "pricing",
+        "nonprofit",
+        "customer-stories",
+        "security",
+        "login",
+        "join"
+    )
+    for (word in exclude_path) {
+        if(str.matches("""[\w|\W]+(${word})+[\w|\W]*""".toRegex())) return false
+    }
+    return str.matches(pattern.toRegex())
+}
