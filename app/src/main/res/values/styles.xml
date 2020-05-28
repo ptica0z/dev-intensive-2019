@@ -62,4 +62,8 @@
         <item name="android:minHeight">72dp</item>
     </style>
 
+    <style name="SplashTheme">
+        <item name="android:background">@drawable/splash_theme</item>
+    </style>
+
 </resources>

@@ -6,7 +6,7 @@ data class Profile (
     val firstName : String,
     val lastName : String,
     val about : String,
-    val repo : String,
+    val repository : String,
     val rating : Int = 0,
     val respect : Int = 0
 ){
@@ -24,7 +24,7 @@ data class Profile (
         "firstName" to firstName,
         "lastName" to lastName,
         "about" to about,
-        "repo" to repo,
+        "repository" to repository,
         "rating" to rating,
         "respect" to respect
     )

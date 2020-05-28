@@ -11,9 +11,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <ImageView
+            style="@style/SplashTheme"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/splash_theme"/>
+            />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
