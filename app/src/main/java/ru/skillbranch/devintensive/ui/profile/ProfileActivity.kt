@@ -97,7 +97,7 @@ class ProfileActivity : AppCompatActivity() {
             viewModel.switchTheme()
         })
 
-        val pattern = """^(https:\/\/)?(www\.)?github\.com\/[\w]+${'$'}"""
+        val pattern = """^(https:\/\/)?(www\.)?github\.com\/[a-z|A-Z]+${'$'}"""
         et_repository.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -110,8 +110,8 @@ class ProfileActivity : AppCompatActivity() {
                     wr_repository.error = null
                     et_repository.error = null
                 } else {
-                    wr_repository.error = "Invalid Url"
-                    et_repository.error = "Invalid Url"
+                    wr_repository.error = "Невалидный адрес репозитория"
+                    et_repository.error = "Невалидный адрес репозитория"
                 }
             }
         })
