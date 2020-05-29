@@ -79,7 +79,7 @@ class ProfileActivity : AppCompatActivity() {
             "firstName" to et_first_name,
             "lastName" to et_last_name,
             "about" to et_about,
-            "repo" to et_repository,
+            "repository" to et_repository,
             "rating" to tv_rating,
             "respect" to tv_respect
         )
@@ -119,7 +119,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun showCurrentMode(isEdit: Boolean) {
-        val info = viewFields.filter { setOf("firstName","lastName","about","repo"). contains(it.key) }
+        val info = viewFields.filter { setOf("firstName","lastName","about","repository"). contains(it.key) }
         for ((_,v) in info){
             v as EditText
             v.isFocusable = isEdit
@@ -155,7 +155,7 @@ class ProfileActivity : AppCompatActivity() {
             firstName = et_first_name.text.toString(),
             lastName = et_last_name.text.toString(),
             about = et_about.text.toString(),
-            repo = if(wr_repository.error == null) et_repository.text.toString() else ""
+            repository = if(wr_repository.error == null) et_repository.text.toString() else ""
         ).apply {
             viewModel.saveProfileData(this)
         }
