@@ -1,8 +1,8 @@
 package ru.skillbranch.devintensive.models.data
 
-import androidx.appcompat.widget.DialogTitle
 import ru.skillbranch.devintensive.extensions.shortFormat
 import ru.skillbranch.devintensive.models.BaseMessage
+import ru.skillbranch.devintensive.models.TextMessage
 import ru.skillbranch.devintensive.utils.Utils
 import java.util.*
 
@@ -13,19 +13,30 @@ data class Chat(
     var messages: MutableList<BaseMessage> = mutableListOf(),
     var isArchived : Boolean = false
 ) {
-    fun unreadableMessageCounter() : Int{
-        // TODO implement me
-        return 0
+    fun unreadableMessageCount() : Int{
+        val n = messages.filter { it.isReaded == false }.size
+        return n
+        //return 0
     }
 
-    private fun lastMessageDate() : Date {
+    fun lastMessageDate() : Date? {
         //TODO implement me
-        return Date()
+        var lastDate : Date?
+        lastDate = if(messages.isEmpty()) null else messages[0].date
+        messages.map {
+            if(it.date > lastDate){
+                lastDate = it.date
+            }
+        }
+        return lastDate
     }
 
-    private fun lastMessageShort() : Pair<String, String>{
-        // TODO implement me
-        return "Сообщений ещё нет" to "@John_Doe"
+    fun lastMessageShort() : Pair<String?, String>{
+        val lastDate = lastMessageDate()
+        if(lastDate == null) return "Сообщений ещё нет" to "@John_Doe"
+        val lastMessage = messages.find { it.date == lastDate }
+        if(lastMessage is TextMessage) return lastMessage.text to "${lastMessage.from.firstName}"
+        else return "${lastMessage!!.from.firstName} - отправил фото" to "${lastMessage!!.from.firstName}"
     }
 
     private fun isSingle() : Boolean = members.size == 1
@@ -38,7 +49,7 @@ data class Chat(
                 Utils.toInitials(user.firstName, user.lastName) ?: "??",
                 "${user.firstName ?: ""} ${user.lastName ?: ""}",
                 lastMessageShort().first,
-                unreadableMessageCounter(),
+                unreadableMessageCount(),
                 lastMessageDate()?.shortFormat(),
                 user.isOnline
             )
@@ -49,7 +60,7 @@ data class Chat(
                 "",
                 title,
                 lastMessageShort().first,
-                unreadableMessageCounter(),
+                unreadableMessageCount(),
                 lastMessageDate()?.shortFormat(),
                 false,
                 ChatType.GROUP,

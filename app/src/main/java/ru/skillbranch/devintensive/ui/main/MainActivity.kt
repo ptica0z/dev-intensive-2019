@@ -3,6 +3,9 @@ package ru.skillbranch.devintensive.ui.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -32,6 +35,27 @@ class MainActivity : AppCompatActivity() {
         initViewModel()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_search, menu)
+        val serchItem = menu?.findItem(R.id.action_search)
+        val serchView = serchItem?.actionView as SearchView
+        serchView.queryHint = "Введите имя пользователя"
+        serchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String): Boolean {
+                viewModel.handleSearchQuery(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                viewModel.handleSearchQuery(newText)
+                return true
+            }
+
+        })
+        return super.onCreateOptionsMenu(menu)
+    }
+
+
     private fun initToolBar() {
         setSupportActionBar(toolbar)
     }
@@ -42,8 +66,14 @@ class MainActivity : AppCompatActivity() {
         }
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         val touchCallback = ChatItemTouchHelperCallback(chatAdapter){
-            viewModel.addToArchive(it.id)
-            Snackbar.make(rv_chat_list, "Вы точно хотите добавить ${it.title} в архив?", Snackbar.LENGTH_LONG).show()
+            val id = it.id
+            viewModel.addToArchive(id)
+            Snackbar.make(rv_chat_list, "Вы точно хотите добавить ${it.title} в архив?", Snackbar.LENGTH_LONG)
+                .setAction("Нет", View.OnClickListener(){
+                    //viewModel.addToArchive(id)
+                    viewModel.restoreFromArchive(id)
+                }).show()
+
         }
         val touchHelper = ItemTouchHelper(touchCallback)
         touchHelper.attachToRecyclerView(rv_chat_list)

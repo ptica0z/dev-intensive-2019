@@ -11,7 +11,6 @@ import androidx.appcompat.widget.SearchView
 
 import androidx.core.view.children
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,7 +36,7 @@ class GroupActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
-        val serchItem = menu?.findItem(R.id.action_serch)
+        val serchItem = menu?.findItem(R.id.action_search)
         val serchView = serchItem?.actionView as SearchView
         serchView.queryHint = "Введите имя пользователя"
         serchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
