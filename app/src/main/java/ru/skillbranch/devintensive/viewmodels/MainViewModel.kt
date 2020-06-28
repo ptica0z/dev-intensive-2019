@@ -19,6 +19,11 @@ class MainViewModel : ViewModel() {
             .map { it.toChatItem()}
             .sortedBy { it.id.toInt() }
     }
+    private val archive = Transformations.map(chatRepository.loadChats()){chats ->
+        return@map chats.filter { it.isArchived }
+            .map { it.toChatItem()}
+            .sortedBy { it.id.toInt() }
+    }
 
     fun getChatData() : LiveData<List<ChatItem>>{
         //return chats

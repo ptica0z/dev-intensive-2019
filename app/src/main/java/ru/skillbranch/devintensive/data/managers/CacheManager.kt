@@ -1,6 +1,5 @@
-package ru.skillbranch.devintensive.data.manager
+package ru.skillbranch.devintensive.data.managers
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import ru.skillbranch.devintensive.extensions.mutableLiveData
 import ru.skillbranch.devintensive.models.data.Chat
